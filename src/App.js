@@ -1,5 +1,6 @@
 import React from 'react';
 import glen from './Glen.png';
+import raryson from './Raryson.jpg';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,13 +14,14 @@ class App extends React.Component {
     return <Square></Square>
   }
 
-  handleClick(){
+  checkAnswer(){
     //get the value in each square, put in an array to check?
   }
   render() {
     return (
       <div>
-        <img src={glen} alt='glen'></img>
+        <img className='avatar' src={glen} alt='glen'></img>
+        <img className='avatar' src={raryson} alt='raryson'></img>
         <div className="Board">
           <div className="board-row">
             {this.renderSquare()}
@@ -37,7 +39,7 @@ class App extends React.Component {
             {this.renderSquare()}
           </div> */}
         </div>
-        <button onClick={this.handleClick}>Check Answer</button>
+        <button onClick={this.checkAnswer}>Check Answer</button>
       </div>
     )
   }
@@ -51,41 +53,43 @@ class Square extends React.Component {
     }
   }
 
-  renderTile() {
-    return <Tile />
-  }
-  // renderTile(i) {
-  //   return <Tile onClick={()=> this.onClick(i)} value={this.state.squares[i]}/>
+  // renderTile() {
+  //   return <Tile />
   // }
+  renderTile(i) {
+    return <Tile onClick={()=> this.onClick(i)} value={this.state.squares[i]}/>
+  }
+  
   onClick(i){
     console.log("clicked!");
     const squares = this.state.squares.slice();
     if (squares[i] < 9) {
       squares[i] = squares[i] + 1 ;
-      this.setState({ squares : squares});
+      console.log(squares[i]);
     }
-    else {
-      this.setState({ value: null });
+    else { //reset that square's val to null
+      squares[i] = null ;
     }
+    this.setState({ squares : squares});
   }
 
   render() {
     return (
       <div className="subBoard">
         <div className="subBoard-row">
-          {this.renderTile()}
-          {this.renderTile()}
-          {this.renderTile()}
+          {this.renderTile(0)}
+          {this.renderTile(1)}
+          {this.renderTile(2)}
         </div>
         <div className="subBoard-row">
-          {this.renderTile()}
-          {this.renderTile()}
-          {this.renderTile()}
+          {this.renderTile(3)}
+          {this.renderTile(4)}
+          {this.renderTile(5)}
         </div>
         <div className="subBoard-row">
-          {this.renderTile()}
-          {this.renderTile()}
-          {this.renderTile()}
+          {this.renderTile(6)}
+          {this.renderTile(7)}
+          {this.renderTile(8)}
         </div>
       </div>
     )
@@ -98,23 +102,30 @@ class Tile extends React.Component {
     this.state = {
       value: null
     };
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    console.log("clicked")
-    if (this.state.value < 9) {
-      this.setState({ value: this.state.value + 1 });
-    }
-    else {
-      this.setState({ value: null });
-    }
-  }
+  // handleClick() {
+  //   console.log("clicked")
+  //   if (this.state.value < 9) {
+  //     this.setState({ value: this.state.value + 1 });
+  //   }
+  //   else {
+  //     this.setState({ value: null });
+  //   }
+  // }
 
+  // render() {
+  //   return (
+  //     <button className="tile"
+  //       onClick={this.handleClick}> {this.state.value}</button>
+  //  //   on click update the value  //in the future, when something is dragged over.
+  //   )
+  // }
   render() {
     return (
       <button className="tile"
-        onClick={this.handleClick}> {this.state.value}</button>
+        onClick={this.props.onClick}> {this.props.value}</button>
    //   on click update the value  //in the future, when something is dragged over.
     )
   }

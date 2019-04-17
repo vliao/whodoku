@@ -15,10 +15,15 @@
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
-  height: 50px;
+  height: 60px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 50px;
+  width: 60px;
+}
+
+.avatar {
+  height:60px;
+  width:60px;
 }

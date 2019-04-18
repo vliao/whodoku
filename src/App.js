@@ -39,7 +39,7 @@ class App extends React.Component {
             {this.renderSquare()}
           </div> */}
         </div>
-        <button onClick={this.checkAnswer}>Check Answer</button>
+        {/* <button onClick={this.checkAnswer}>Check Answer</button> */}
       </div>
     )
   }
@@ -51,6 +51,8 @@ class Square extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
     }
+
+    this.checkAnswer = this.checkAnswer.bind(this);
   }
 
   // renderTile() {
@@ -59,13 +61,11 @@ class Square extends React.Component {
   renderTile(i) {
     return <Tile onClick={()=> this.onClick(i)} value={this.state.squares[i]}/>
   }
-  
+
   onClick(i){
-    console.log("clicked!");
     const squares = this.state.squares.slice();
     if (squares[i] < 9) {
       squares[i] = squares[i] + 1 ;
-      console.log(squares[i]);
     }
     else { //reset that square's val to null
       squares[i] = null ;
@@ -73,6 +73,10 @@ class Square extends React.Component {
     this.setState({ squares : squares});
   }
 
+  checkAnswer(){
+    console.log(this.state.squares);
+    console.log(checkNine(this.state.squares));
+  }
   render() {
     return (
       <div className="subBoard">
@@ -91,6 +95,7 @@ class Square extends React.Component {
           {this.renderTile(7)}
           {this.renderTile(8)}
         </div>
+        <button onClick={this.checkAnswer}>Check your answer</button>
       </div>
     )
   }
@@ -129,6 +134,17 @@ class Tile extends React.Component {
    //   on click update the value  //in the future, when something is dragged over.
     )
   }
+}
+
+function checkNine(array){
+  var sortedArray = array.sort();
+  const correctArray = [1,2,3,4,5,6,7,8,9];
+  for (var i = 0; i < sortedArray.length; ++i) {
+       if (sortedArray[i] !== correctArray[i]) {
+           return false;
+       }
+  }
+  return true;
 }
 
 export default App;
